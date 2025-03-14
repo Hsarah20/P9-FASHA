@@ -54,4 +54,4 @@ jobs:
       - name: Deploy metadata to production
         if: github.ref == 'refs/heads/main'
         run: |
-         sf project deploy start --manifest ./package\package.xml -l RunLocalTests
+         sf project deploy start --manifest ./package/package.xml -l RunLocalTests
