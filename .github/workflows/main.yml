@@ -33,13 +33,15 @@ jobs:
           npm install -g @salesforce/cli@latest
           echo "y" | npm install sfdx-git-delta@3.3.0 -g
 
-      - name: Authenticate Salesforce # Vous devez avoir une connexion avec Salesforce pour pouvoir deployer le code à la dernière étape.
+      - name: 'Populate auth file with SFDX_URL secret of integration org'
+        shell: bash
         run: |
-          echo "${{ secrets.SF_SECRET }}" > server.key
-          sfdx auth jwt grant --client-id ${{ secrets.SF_CONSUMER_KEY }} \
-                              --username ${{ secrets.SF_USERNAME }} \
-                              --jwt-key-file server.key \
-                              --instance-url https://login.salesforce.com
+              echo ${{ secrets.AUTH_URL}} > ./SFDX_INTEGRATION_URL.txt
+
+      - name: Authenticate Salesforce 
+        run: |
+              sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
+
 
       - name: Generate metadata delta for pull request  # Utilisez le plug-in sfdx-git-delta pour effectuer un delta, generer le package xml dans un fichier temporaire ex : .temp
         run:  |
