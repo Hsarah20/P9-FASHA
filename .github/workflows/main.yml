@@ -43,7 +43,7 @@ jobs:
               sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
 
 
-      - name: Generate metadata delta for pull request  # Utilisez le plug-in sfdx-git-delta pour effectuer un delta, generer le package xml dans un fichier temporaire ex : .temp
+      - name: Generate metadata delta for pull request
         run:  |
           sf sgd source delta --to "HEAD" --from "HEAD~1" --output-dir "."
           if [ ! -s ".temp/package/package.xml" ]; then
@@ -54,4 +54,4 @@ jobs:
       - name: Deploy metadata to production
         if: github.ref == 'refs/heads/main'
         run: |
-          sfdx force:source:deploy -x .temp/package/package.xml -l RunLocalTests
+         sf project deploy start --manifest ./package\package.xml -l RunLocalTests
