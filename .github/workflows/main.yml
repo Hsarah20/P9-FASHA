@@ -46,7 +46,7 @@ jobs:
       - name: Generate metadata delta for pull request  # Utilisez le plug-in sfdx-git-delta pour effectuer un delta, generer le package xml dans un fichier temporaire ex : .temp
         run:  |
           mkdir -p .temp
-          sfdx sgd:source:delta --to "HEAD" --from "origin/main" --output .temp --generate-delta
+          sf sgd source delta --to "HEAD" --from "HEAD~1" --output-dir "."
           if [ ! -s ".temp/package/package.xml" ]; then
             echo "No changes detected, skipping deployment."
             exit 0
