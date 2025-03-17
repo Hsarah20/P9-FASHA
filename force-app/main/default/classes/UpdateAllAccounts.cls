@@ -9,7 +9,7 @@ global class UpdateAllAccounts implements Database.Batchable<sObject>{
     global void execute(Database.BatchableContext info, List<Account> scope){
         Set<Id> setAccountIds = (new Map<Id,SObject>(scope)).keySet();
 
-        MyTeamOrdersController.getSumOrdersByAccount(setAccountIds);
+       // MyTeamOrdersController.getSumOrdersByAccount(setAccountIds);
     }    
      
     global void finish(Database.BatchableContext info){   
