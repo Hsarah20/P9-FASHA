@@ -1,5 +1,5 @@
 trigger CalculMontant on Order (before update) {
 
-    CalculateMontantTriggerHandler.calculatMontantOrder(Trigger.New);
+    CalculatMontantTriggerHandler.calculatMontantOrder(Trigger.New);
  
 }

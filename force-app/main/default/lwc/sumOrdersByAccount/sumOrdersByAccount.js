@@ -1,22 +1,19 @@
 import { LightningElement, api,wire } from 'lwc';
 import getSumOrdersByAccount from '@salesforce/apex/MyTeamOrdersController.getSumOrdersByAccount';
 
-export default class Orders extends LightningElement {
+export default class sumOrdersByAccount extends LightningElement {
 
     sumOrdersOfCurrentAccount=0;
     @api recordId;
 
     connectedCallback() {
-        this.fetchSumOrders();
+       //console.log("Record id" +this.recordId);
     }
-
-    // fetchSumOrders() {
-    //     // TODO - récupérer le montant total des Orders sur le compte avec la méthode apex
-    // }
 
     @wire(getSumOrdersByAccount, { accountId: '$recordId' })
     wiredOrder({ error, data }) {
         if (data) {
+           // console.log('DATA '+ JSON.stringify(data))
             this.sumOrdersOfCurrentAccount = data;
                 
         } else if (error) {

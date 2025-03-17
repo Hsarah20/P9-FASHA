@@ -1,4 +1,4 @@
-public with sharing class CalculateMontantTriggerHandler {
+public with sharing class CalculatMontantTriggerHandler{
     
     public static void  calculatMontantOrder(List<Order> newOrders) {
 
