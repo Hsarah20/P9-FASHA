@@ -1,4 +1,4 @@
-@isTest
+@TestVisible
 private class TestDataFactory {
 
     // Méthode pour créer un compte de test
@@ -9,12 +9,11 @@ private class TestDataFactory {
     }
 
     // Méthode pour créer une commande de test
-    public static Order createTestOrder(Id accountId, Decimal totalAmount, Decimal shipmentCost, String status) {
+    public static Order createTestOrder(Id accountId, Decimal shipmentCost, String status) {
         Order testOrder = new Order(
             Name = 'Test Order',
             Status = status,
             AccountId = accountId,
-            TotalAmount = totalAmount,
             ShipmentCost__c = shipmentCost
         );
         insert testOrder;
@@ -29,7 +28,6 @@ private class TestDataFactory {
                 Name = 'Test Order ' + i,
                 Status = 'Activated',
                 AccountId = accountId,
-                TotalAmount = Math.random() * 1000,
                 ShipmentCost__c = Math.random() * 50
             ));
         }
