@@ -1,5 +1,5 @@
-@TestVisible
-public class TestDataFactory {
+@isTest
+public class TestDataFactory{
 
     // Méthode pour créer un compte de test
     public static Account createTestAccount(String accountName) {
@@ -14,7 +14,9 @@ public class TestDataFactory {
             Name = 'Test Order',
             Status = status,
             AccountId = accountId,
-            ShipmentCost__c = shipmentCost
+            ShipmentCost__c = shipmentCost,
+            EffectiveDate=Date.today(),
+            EndDate=Date.today().addDays(8)
         );
         insert testOrder;
         return testOrder;
