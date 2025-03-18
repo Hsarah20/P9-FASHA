@@ -1,5 +1,5 @@
 @TestVisible
-private class TestDataFactory {
+public class TestDataFactory {
 
     // Méthode pour créer un compte de test
     public static Account createTestAccount(String accountName) {
