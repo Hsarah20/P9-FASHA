@@ -1,6 +1,6 @@
-public with sharing class CalculatMontantTriggerHandler{
+public with sharing class CalculateNetAmountTriggerHandler{
     
-    public static void  calculatMontantOrder(List<Order> newOrders) {
+    public static void  calculateNetAmountOfOrders(List<Order> newOrders) {
 
         for (Order newOrder : newOrders) {
             // Vérifier que TotalAmount et ShipmentCost__c ne sont pas null pour éviter les erreurs
