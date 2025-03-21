@@ -31,9 +31,9 @@ public with sharing class UpdateAccountCATriggerHandler{
         }
 
         // 4️ Mise à jour unique sans doublons
-        if (!lstAccountsToUpdate.isEmpty()) {
-            update lstAccountsToUpdate;
-        }
+        // if (!lstAccountsToUpdate.isEmpty()) {
+        //     update lstAccountsToUpdate;
+        // }
 
     }
 }
