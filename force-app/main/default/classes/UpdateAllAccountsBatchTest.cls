@@ -1,5 +1,5 @@
 @isTest
-private class UpdateAllAccountsTest{
+private class UpdateAllAccountsBatchTest{
 
     @isTest static void test() {
         Account acc1 = new Account(Name = 'Test Account 1');

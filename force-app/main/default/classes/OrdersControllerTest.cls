@@ -9,7 +9,7 @@ private class OrdersControllerTest {
         Order testOrder = TestDataFactory.createTestOrder(testAccount.Id, 50.00, 'Draft');
 
         //Ajouter un produit à la commande
-        TestDataFactory.createOrderItem(testOrder);
+        TestDataFactory.createOrderItem(testOrder,true);
 
         // Activer la commande
         testOrder.Status = 'Activated';
@@ -33,7 +33,7 @@ private class OrdersControllerTest {
 
         Test.startTest();
         // 2️ Exécution de la méthode testée
-        Decimal sumOrders = MyTeamOrdersController.getSumOrdersByAccount(testAccount.Id);
+        Decimal sumOrders = OrdersController.getSumOrdersByAccount(testAccount.Id);
         Test.stopTest();
 
         // 3️ Vérification des résultats (doit être null ou 0)
@@ -44,7 +44,7 @@ private class OrdersControllerTest {
     static void testGetSumOrdersByAccount_NullAccountId() {
         try {
             Test.startTest();
-            MyTeamOrdersController.getSumOrdersByAccount(null);
+            OrdersController.getSumOrdersByAccount(null);
             Test.stopTest();
             System.assert(false, 'Une exception aurait dû être levée pour un ID null.');
         } catch (IllegalArgumentException e) {
