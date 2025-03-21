@@ -49,13 +49,17 @@ public class TestDataFactory{
         Status = 'Draft',
         AccountId = accountId,
         ShipmentCost__c = shipmentCost,
-        EffectiveDate = Date.today(),
+        EffectiveDate = Date.today(), 
         EndDate = Date.today().addDays(8)
         );
         insert testOrder;
 
         // Si on veut que l'Order soit activé, on le met à jour
         if (status == 'Activated') {
+            List<OrderItem> orderItems = new List<OrderItem>();
+            orderItems.add(createOrderItem(testOrder,false));
+            insert orderItems;
+            
             testOrder.Status = 'Activated';
             update testOrder;
         }
@@ -68,14 +72,21 @@ public class TestDataFactory{
         for (Integer i = 0; i < count; i++) {
             orders.add(new Order(
                 Name = 'Test Order ' + i,
-                Status = isActivated ? 'Activated' : 'Draft',
+                Status =  'Draft',
                 AccountId = accountId,
                 EffectiveDate = Date.today(),
                 EndDate=Date.today().addDays(8)
             ));
         }
-
         insert orders;
+        
+        if (isActivated) {
+            for(Order o:orders){
+                o.Status = 'Activated';
+            }
+            update orders;
+        }
+            
         return orders;
     }
 

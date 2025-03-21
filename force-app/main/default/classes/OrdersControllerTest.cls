@@ -6,7 +6,7 @@ private class OrdersControllerTest {
     static void testGetSumOrdersByAccount_Positive() {
         //Préparation des données
         Account testAccount = TestDataFactory.createTestAccount('Test Account');
-        Order testOrder = TestDataFactory.createTestOrder(testAccount.Id, 50.00, 'Draft');
+        Order testOrder = TestDataFactory.createTestOrder(testAccount.Id, 100.00, 'Draft');
 
         //Ajouter un produit à la commande
         TestDataFactory.createOrderItem(testOrder,true);
@@ -21,8 +21,7 @@ private class OrdersControllerTest {
         Test.stopTest();
 
         // Vérification des résultats
-        Decimal expectedSum = 100 + 110 + 120; // Total des commandes activées
-        System.assertEquals(expectedSum, sumOrders, 'Le total des commandes est incorrect.');
+        System.assertEquals(100, sumOrders, 'Le total des commandes est incorrect.');
     }
 
     @isTest

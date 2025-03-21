@@ -7,13 +7,13 @@ global class UpdateAllAccountsBatch implements Database.Batchable<sObject>{
     }
      
     global void execute(Database.BatchableContext info, List<Account> scope){
-        Set<Id> setAccountIds = new Set<Id>();
+        Set<Id> accountIds = new Set<Id>();
 
         for (Account acc : scope) {
-            setAccountIds.add(acc.Id);
+            accountIds.add(acc.Id);
         }
 
-        if (setAccountIds.isEmpty()) {
+        if (accountIds.isEmpty()) {
             return;
         }
 
@@ -23,7 +23,7 @@ global class UpdateAllAccountsBatch implements Database.Batchable<sObject>{
         for (AggregateResult ar : [
             SELECT AccountId, SUM(TotalAmount) totalCA
             FROM Order
-            WHERE AccountId IN :setAccountIds AND Status = 'Activated'
+            WHERE AccountId IN :accountIds AND Status = 'Activated'
             GROUP BY AccountId
         ]) {
             mapAccountRevenue.put((Id) ar.get('AccountId'), (Decimal) ar.get('totalCA'));

@@ -1,28 +1,37 @@
 @isTest
-private class UpdateAllAccountsBatchTest{
+private class UpdateAllAccountsBatchTest {
 
-    @isTest static void test() {
-        Account acc1 = new Account(Name = 'Test Account 1');
-        insert acc1;
+    @isTest
+    static void testUpdateAllAccountsBatch() {
+      // 1️ Préparation des données avec TestDataFactory
+      Account testAccount1 = TestDataFactory.createTestAccount('Test Account 1');
+      Account testAccount2 = TestDataFactory.createTestAccount('Test Account 2');
 
-        Product2 pd1 = new Product2(Name = 'Chemise Verte longue XYX', Family = 'Chemise');
-        Insert pd1;
- 
-        //Create the PricebookEntry
-        PricebookEntry pbe = new PricebookEntry(
-            Pricebook2Id = Test.getStandardPricebookId(),
-            Product2Id = pd1.Id,
-            UnitPrice = 1020,
-            IsActive = true
-        );
-        Insert pbe;
+      // Créer des commandes activées pour le premier compte avec des produits
+      Order activatedOrder1 = TestDataFactory.createTestOrder(testAccount1.Id, 100.00, 'Activated');
+      Order activatedOrder2 = TestDataFactory.createTestOrder(testAccount1.Id, 200.00, 'Activated');
 
-        Order o1 = new Order(AccountId = acc1.Id);
-        insert o1;
+      // Créer une commande non activée pour le deuxième compte
+      Order draftOrder = TestDataFactory.createTestOrder(testAccount2.Id, 150.00, 'Draft');
+      TestDataFactory.createOrderItem(draftOrder, true);
 
-        OrderItem oi1 = new OrderItem (OrderId = o1.Id, PricebookEntryId = pbe.Id, Quantity=10, UnitPrice = 150);
-        insert oi1;
-        OrderItem oi2 = new OrderItem (OrderId = o1.Id, PricebookEntryId = pbe.Id, Quantity=20, UnitPrice = 1000);
-        insert oi2;        
-    }
+      // 2️ Exécution du batch
+      Test.startTest();
+      UpdateAllAccountsBatch batch = new UpdateAllAccountsBatch();
+      Database.executeBatch(batch);
+      Test.stopTest();
+
+      // 3️ Vérification des résultats
+      // Récupérer les comptes mis à jour
+      Account updatedAccount1 = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount1.Id];
+      Account updatedAccount2 = [SELECT Id, Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount2.Id];
+      System.debug('Account 1 '+updatedAccount1);
+      System.debug('Account 2 '+updatedAccount2);
+
+      // Vérifier que le chiffre d'affaires du premier compte est correct
+      System.assertEquals(200, updatedAccount1.Chiffre_d_affaire__c, 'Le chiffre d\'affaires du premier compte est incorrect.');
+
+      // Vérifier que le chiffre d'affaires du deuxième compte est null (aucune commande activée)
+      System.assertEquals(null, updatedAccount2.Chiffre_d_affaire__c, 'Le chiffre d\'affaires du deuxième compte devrait être null.');
+  }
 }
