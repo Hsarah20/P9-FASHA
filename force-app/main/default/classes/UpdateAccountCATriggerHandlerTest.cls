@@ -37,12 +37,11 @@ private class UpdateAccountCATriggerHandlerTest {
     static void testUpdateAccountCA_WithNullAccountId() {
         Order orderWithoutAccount = new Order(
             Status = 'Draft',
-            TotalAmount = 200.00,
             EffectiveDate = Date.today(),
             Pricebook2Id = Test.getStandardPricebookId()
         );
         insert orderWithoutAccount;
-        
+
         orderWithoutAccount.Status='Activated';
         update orderWithoutAccount;
 
