@@ -17,7 +17,7 @@ private class SumOrdersByAccountControllerTest {
 
         Test.startTest();
         // Exécution de la méthode testée
-        Decimal sumOrders = OrdersController.getSumOrdersByAccount(testAccount.Id);
+        Decimal sumOrders = SumOrdersByAccountController.getSumOrdersByAccount(testAccount.Id);
         Test.stopTest();
 
         // Vérification des résultats
@@ -32,7 +32,7 @@ private class SumOrdersByAccountControllerTest {
 
         Test.startTest();
         // 2️ Exécution de la méthode testée
-        Decimal sumOrders = OrdersController.getSumOrdersByAccount(testAccount.Id);
+        Decimal sumOrders = SumOrdersByAccountController.getSumOrdersByAccount(testAccount.Id);
         Test.stopTest();
 
         // 3️ Vérification des résultats (doit être null ou 0)
@@ -43,7 +43,7 @@ private class SumOrdersByAccountControllerTest {
     static void testGetSumOrdersByAccount_NullAccountId() {
         try {
             Test.startTest();
-            OrdersController.getSumOrdersByAccount(null);
+            SumOrdersByAccountController.getSumOrdersByAccount(null);
             Test.stopTest();
             System.assert(false, 'Une exception aurait dû être levée pour un ID null.');
         } catch (IllegalArgumentException e) {
