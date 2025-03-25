@@ -38,6 +38,8 @@ private class UpdateAccountCATriggerHandlerTest {
         Order orderWithoutAccount = new Order(
             Status = 'Draft',
             EffectiveDate = Date.today(),
+            AccountId=null,
+            Name = 'Test Order',
             Pricebook2Id = Test.getStandardPricebookId()
         );
         insert orderWithoutAccount;
