@@ -28,7 +28,7 @@ public class TestDataFactory{
         
         OrderItem orderItem = new OrderItem(OrderId = order.Id, Quantity = 1, PricebookEntryId = pbe.Id,UnitPrice = 100 );
 
-        if(isInsert){
+        if(isInsert==true){
             insert orderItem;
         }
 
