@@ -16,30 +16,9 @@ global class UpdateAllAccountsBatch implements Database.Batchable<sObject>{
         if (accountIds.isEmpty()) {
             return;
         }
-
-        // 1️ Récupérer le nouveau chiffre d’affaires pour ces comptes
-        Map<Id, Decimal> mapAccountRevenue = new Map<Id, Decimal>();
-
-        for (AggregateResult ar : [
-            SELECT AccountId, SUM(TotalAmount) totalCA
-            FROM Order
-            WHERE AccountId IN :accountIds AND Status = 'Activated'
-            GROUP BY AccountId
-        ]) {
-            mapAccountRevenue.put((Id) ar.get('AccountId'), (Decimal) ar.get('totalCA'));
-        }
-
-        // 2️ Mettre à jour les comptes avec le nouveau chiffre d’affaires
-        List<Account> lstAccountsToUpdate = new List<Account>();
-
-        for (Id accId : mapAccountRevenue.keySet()) {
-            Account acc = new Account(Id = accId, Chiffre_d_affaire__c = mapAccountRevenue.get(accId));
-            lstAccountsToUpdate.add(acc);
-        }
-
-        if (!lstAccountsToUpdate.isEmpty()) {
-            update lstAccountsToUpdate;
-        }
+        
+        //mettre à jour le chiffre d'affaires
+        AccountRevenueService.updateAccountRevenue(accountIds);
     }    
      
     global void finish(Database.BatchableContext info){   
