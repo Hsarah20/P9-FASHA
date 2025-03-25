@@ -1,5 +1,5 @@
 import { LightningElement, api,wire } from 'lwc';
-import getSumOrdersByAccount from '@salesforce/apex/OrdersController.getSumOrdersByAccount';
+import getSumOrdersByAccount from '@salesforce/apex/SumOrdersByAccountController.getSumOrdersByAccount';
 
 export default class sumOrdersByAccount extends LightningElement {
 
