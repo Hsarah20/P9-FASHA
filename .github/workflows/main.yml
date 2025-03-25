@@ -40,7 +40,7 @@ jobs:
 
       - name: Authenticate Salesforce 
         run: |
-              sfdx auth:sfdxurl:store -f ./SFDX_INTEGRATION_URL.txt -s -a integration
+              sf org login sfdx-url -f ./SFDX_INTEGRATION_URL.txt -s -a integration
 
 
       - name: Generate metadata delta for pull request
