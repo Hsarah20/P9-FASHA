@@ -1,10 +1,15 @@
 <template>
+    <!--Cas de chargement-->
+    <template lwc:if={isLoading}>
+        <lightning-spinner variant="brand" alternative-text="Chargement..."></lightning-spinner>
+    </template>
+    <!-- Cas d'erreur -->
     <template lwc:if={isError}>
         <div class="slds-box slds-theme_error">
             <h1>Erreur : Aucune commande activée ou montant total inférieur ou égal à 0.</h1>
         </div>
     </template>
-    <!-- Si la valeur de "sumOrdersOfCurrentAccount" est vide ou égale a Zero, je souhaite afficher un message d'erreur -->
+    <!-- Cas de succès-->
     <template lwc:else>
         <div class="slds-box slds-theme_success">
             <h1>Total des Commandes :  <lightning-formatted-number value={sumOrdersOfCurrentAccount} format-style="currency" currency-code="EUR"></lightning-formatted-number></h1>
