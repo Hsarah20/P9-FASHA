@@ -5,7 +5,7 @@ export default class sumOrdersByAccount extends LightningElement {
 
     sumOrdersOfCurrentAccount=0;
     @api recordId;
-    isLoading = true;
+ 
 
     connectedCallback() {
        //console.log("Record id" +this.recordId);
@@ -13,7 +13,7 @@ export default class sumOrdersByAccount extends LightningElement {
 
     @wire(getSumOrdersByAccount, { accountId: '$recordId' })
     wiredOrder({ error, data }) {
-        this.isLoading = false;
+       // this.isLoading = false;
         if (data) {
             // console.log('DATA '+ JSON.stringify(data))
             this.sumOrdersOfCurrentAccount = data;

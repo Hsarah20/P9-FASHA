@@ -1,8 +1,4 @@
 <template>
-    <!--Cas de chargement-->
-    <template lwc:if={isLoading}>
-        <lightning-spinner variant="brand" alternative-text="Chargement..."></lightning-spinner>
-    </template>
     <!-- Cas d'erreur -->
     <template lwc:if={isError}>
         <div class="slds-box slds-theme_error">
