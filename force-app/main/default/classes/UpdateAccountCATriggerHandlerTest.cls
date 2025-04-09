@@ -2,34 +2,41 @@
 private class UpdateAccountCATriggerHandlerTest {
 
     @isTest
-    static void testUpdateAccountCA_WithActivatedOrders() {
-        Account testAccount = TestDataFactory.createTestAccount('Test Account');
-        Order activatedOrder = TestDataFactory.createTestOrder(
-            testAccount.Id, 
-            100.00, 
-            'Activated'
-        );
+    static void testUpdateAccountCA_WithActivatedOrders() {   
+       // Création Account Test
+       Account testAccount = TestDataFactory.createTestAccount('Test Account');
         
-        Order draftOrder = TestDataFactory.createTestOrder(
-            testAccount.Id, 
-            50.00, 
-            'Draft'
-        );
+       // Création Draft orders Test 
+       List<Order> ordersTest = TestDataFactory.createMultipleTestOrders(testAccount.Id, 3,'Draft');    
 
-        // Exécution du test
-        Test.startTest();
-        UpdateAccountCATriggerHandler.updateAccountCA(
-            new List<Order>{activatedOrder, draftOrder}
-        );
-        Test.stopTest();
+       // Update Status Orders to Activated    
+       for(Integer i = 0; i < ordersTest.size(); i++) {
+            ordersTest[i].Status='Activated';       
+       }
+      
+       Test.startTest();
+        // Mise à jour des commandes (le trigger devrait se déclencher)
+        update ordersTest;
+       Test.stopTest();
+       
+       List<Order> updatedOrders = [
+            SELECT Id, TotalAmount 
+            FROM Order 
+            WHERE AccountId = :testAccount.Id AND Status = 'Activated'
+        ];
 
-        // Vérification des résultats
-        Account updatedAccount = [SELECT Id, Chiffre_d_affaire__c 
-                                FROM Account 
-                                WHERE Id = :testAccount.Id];
+        Decimal expectedCA = 0;
+        for(Order order : updatedOrders) {
+            if(order.TotalAmount!= null) {
+                expectedCA += order.TotalAmount;
+            }
+        }
+
         
-        // Seule la commande activée doit être prise en compte
-        System.assertEquals(100.00, updatedAccount.Chiffre_d_affaire__c, 
-            'Le chiffre d\'affaires doit correspondre aux commandes activées');
+
+       // Vérification des résultats
+       Account updatedAccount = [SELECT Chiffre_d_affaire__c FROM Account WHERE Id = :testAccount.Id];
+       System.assertEquals(expectedCA, updatedAccount.Chiffre_d_affaire__c, 
+           'Le CA doit être mis à jour avec le Status');
     }
 }

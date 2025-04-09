@@ -38,7 +38,7 @@ private class CalculateNetAmountTriggerHandlerTest{
         Account testAccount = TestDataFactory.createTestAccount('Test Bulk Account');
 
         // Création de plusieurs commandes de test
-        List<Order> testOrders = TestDataFactory.createMultipleTestOrders(testAccount.Id, 10);
+        List<Order> testOrders = TestDataFactory.createMultipleTestOrders(testAccount.Id, 10,'Activated');
         
         // Récupération des commandes après ajout des OrderItems
         List<Order> updatedOrders = [SELECT Id, TotalAmount, ShipmentCost__c, NetAmount__c 

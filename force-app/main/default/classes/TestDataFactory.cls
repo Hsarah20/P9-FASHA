@@ -91,7 +91,7 @@ public class TestDataFactory{
     }
 
     // Méthode pour générer plusieurs commandes de test pour un compte
-    public static List<Order> createMultipleTestOrders(Id accountId, Integer count) {
+    public static List<Order> createMultipleTestOrders(Id accountId, Integer count,String status) {
         List<Order> orders = new List<Order>();
         Id standardPricebookId = Test.getStandardPricebookId();
 
@@ -117,9 +117,12 @@ public class TestDataFactory{
         insert orderItems;
     
         // Activation des Orders après ajout des produits
-        for (Order o : orders) {
-            o.Status = 'Activated';
+        if(Status == 'Activated'){
+            for (Order o : orders) {
+                o.Status = 'Activated';
+            }
         }
+        
         update orders;
     
         return orders;
